@@ -169,7 +169,7 @@ public class XMPUtilTest {
 
     public String t2XMP() {
         return "<rdf:Description rdf:about='' xmlns:bibtex='http://jabref.sourceforge.net/bibteXMP/' "
-                + "bibtex:title='�pt�mz�t��n' " + "bibtex:bibtexkey='OezbekC06' " + "bibtex:entrytype='INCOLLECTION' "
+                + "bibtex:title='Optimization' " + "bibtex:bibtexkey='OezbekC06' " + "bibtex:entrytype='INCOLLECTION' "
                 + "bibtex:year='2003' "
                 + "bibtex:booktitle='Proceedings of the of the 25th International Conference on \n Software-Engineering (Portland, Oregon)' "
                 + ">\n" + "<bibtex:pdf>YeKis03 - Towards.pdf</bibtex:pdf>\n" + "</rdf:Description>\n";
