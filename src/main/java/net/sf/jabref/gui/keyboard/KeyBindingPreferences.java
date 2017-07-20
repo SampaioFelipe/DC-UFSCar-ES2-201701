@@ -18,7 +18,7 @@ import net.sf.jabref.preferences.JabRefPreferences;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class KeyBindingPreferences {
+public class   KeyBindingPreferences {
 
     private static final Log LOGGER = LogFactory.getLog(KeyBindingPreferences.class);
 

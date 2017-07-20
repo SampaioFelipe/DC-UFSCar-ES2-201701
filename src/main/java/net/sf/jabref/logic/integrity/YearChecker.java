@@ -1,5 +1,6 @@
 package net.sf.jabref.logic.integrity;
 
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
@@ -26,9 +27,21 @@ public class YearChecker implements ValueChecker {
             return Optional.of(Localization.lang("should contain a four digit number"));
         }
 
-        if (!ENDS_WITH_FOUR_DIGIT.test(value.replaceAll(PUNCTUATION_MARKS, ""))) {
-            return Optional.of(Localization.lang("last four nonpunctuation characters should be numerals"));
+        if (!ENDS_WITH_FOUR_DIGIT.test(value.replaceAll(PUNCTUATION_MARKS, ""))) {return Optional.of(Localization.lang("last four nonpunctuation characters should be numerals"));
         }
+
+        /*If the first parse fails, an error is returned
+        * If the year value is negative or higher than the current year, it also returns an error*/
+        try
+        {
+            int entry_year = Integer.parseInt(value);
+            int currentyear = Calendar.getInstance().get(Calendar.YEAR);
+
+            if (entry_year < 0 || entry_year > currentyear)
+                return Optional.of(Localization.lang("the number must be from 0 to this year"));
+
+        }catch(Exception e)
+        {return Optional.of(Localization.lang("must be a number from 0 to this year"));}
 
         return Optional.empty();
     }
