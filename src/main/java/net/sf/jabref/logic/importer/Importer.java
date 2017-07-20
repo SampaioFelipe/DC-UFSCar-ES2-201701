@@ -1,16 +1,12 @@
 package net.sf.jabref.logic.importer;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import net.sf.jabref.logic.util.FileExtensions;
+
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Objects;
-
-import net.sf.jabref.logic.util.FileExtensions;
 
 /**
  * Role of an importer for JabRef.
@@ -27,6 +23,8 @@ public abstract class Importer implements Comparable<Importer> {
      * not of the suitable type, and true otherwise. Returning true is the safe choice if not certain.
      */
     public abstract boolean isRecognizedFormat(BufferedReader input) throws IOException;
+
+
 
     public boolean isRecognizedFormat(Path filePath, Charset encoding) throws IOException {
         try (BufferedReader bufferedReader = getReader(filePath, encoding)) {
@@ -50,6 +48,7 @@ public abstract class Importer implements Comparable<Importer> {
      * @param input the input to read from
      */
     public abstract ParserResult importDatabase(BufferedReader input) throws IOException ;
+
 
     /**
      * Parse the database in the specified file.

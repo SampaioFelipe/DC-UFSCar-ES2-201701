@@ -1,44 +1,46 @@
 package net.sf.jabref.logic.importer.fileformat;
 
-import net.sf.jabref.gui.importer.ImportFormats;
-import net.sf.jabref.logic.importer.OutputPrinter;
+import net.sf.jabref.logic.importer.Importer;
+import net.sf.jabref.logic.importer.ParserResult;
+import net.sf.jabref.logic.util.FileExtensions;
 import net.sf.jabref.model.entry.BibEntry;
+import net.sf.jabref.model.entry.BibtexEntryTypes;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import net.sf.jabref.logic.importer.ImportFormatReader;
-import net.sf.jabref.model.entry.BibtexEntryType;
-import net.sf.jabref.model.entry.BibtexEntryTypes;
 
 /**
  * Created by pedro on 20/07/17.
  */
-public class CSVImporter extends ImportFormats {
+public class CSVImporter extends Importer {
 
     @Override
-    public String getFormatName(){
-        return "CSV";
+    public String getName(){
+        return "CSV Importer";
     }
 
     @Override
-    public String getExtensions(){
-        return "csv";
+    public FileExtensions getExtensions(){
+        return FileExtensions.TXT;
     }
 
     @Override
-    public boolean isRecognizedFormat(InputStream stream) throws IOException {
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public boolean isRecognizedFormat(BufferedReader reader){
         return true;
     }
 
     @Override
-    public List<BibEntry> importEntries(InputStream stream, OutputPrinter printer) throws IOException{
+    public ParserResult importDatabase(BufferedReader reader) throws IOException{
         List<BibEntry> bibitems = new ArrayList<>();
-        BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
 
-        String line = in.readLine();
+        String line = reader.readLine();
         while(line != null){
             if(!line.trim().isEmpty()){
                 String[] fields = line.split(";");
@@ -48,11 +50,12 @@ public class CSVImporter extends ImportFormats {
                 be.setField("author", fields[1]);
                 be.setField("title", fields[2]);
                 bibitems.add(be);
-                line = in.readLine();
+                line = reader.readLine();
             }
         }
 
-        return bibitems;
+        return new ParserResult(bibitems);
     }
+
 
 }
