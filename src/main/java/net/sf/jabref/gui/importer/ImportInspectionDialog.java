@@ -152,7 +152,8 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
     private final DefaultEventSelectionModel<BibEntry> selectionModel;
     private final JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
     private final JButton ok = new JButton(Localization.lang("OK"));
-    private final JButton createNewDB = new JButton(Localization.lang("createNewDB"));
+    private final JButton selectDuplicates =new JButton(Localization.lang("Select All Duplicates"));
+    private final JButton createNewDB = new JButton(Localization.lang("New Database"));
     private final JButton generate = new JButton(Localization.lang("Generate now"));
     private final EventList<BibEntry> entries = new BasicEventList<>();
     private final SortedList<BibEntry> sortedList;
@@ -271,6 +272,7 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
         builder.addButton(selectAll);
         JButton deselectAll = new JButton(Localization.lang("Deselect all"));
         builder.addButton(deselectAll);
+        builder.addButton(selectDuplicates);
         builder.addButton(deselectAllDuplicates);
         builder.addRelatedGap();
         JButton delete = new JButton(Localization.lang("Delete"));
@@ -285,6 +287,7 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
         ok.setEnabled(false);
         generate.setEnabled(false);
         ok.addActionListener(new OkListener());
+        createNewDB.setToolTipText("Create New Database with selected entries");
         cancel.addActionListener(e -> {
             signalStopFetching();
             dispose();
@@ -312,13 +315,14 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
         });
         deselectAllDuplicates.setEnabled(false);
         delete.addActionListener(deleteListener);
-        createNewDB.addActionListener(e2->{
+
+        createNewDB.addActionListener(e->{
               BibDatabase bdata= new BibDatabase();
               //add to the brand new BibDatabase
-              //duplicated entries
+              //all entries with 'keep' settled
               for (BibEntry entry : entries){
-                if(entry.isGroupHit())
-                  bdata.insertEntry(entry);
+                  if(entry.isSearchHit())
+                    bdata.insertEntry(entry);
               }
               //if has entries create a new tab on the main frame
               if(bdata.hasEntries()){
@@ -327,6 +331,15 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
               }
 
         });
+        selectDuplicates.addActionListener(e->
+          {
+              for (int i = 0; i < glTable.getRowCount(); i++) {
+                  if (glTable.getValueAt(i, DUPL_COL) != null) {
+                      glTable.setValueAt(true, i, 0);
+                  }
+              }
+              glTable.repaint();
+          });
         getContentPane().add(bb.getPanel(), BorderLayout.SOUTH);
 
         // Remember and default to last size:
