@@ -305,12 +305,16 @@ public class BibEntry implements Cloneable {
                 try {
                     int year = Integer.parseInt(fieldValue.get());
                     System.out.println(year);
-                    if (year < 1000) {
-                        clearField("year");
+//                    int currentyear = Calendar.getInstance().get(Calendar.YEAR);
+
+                    if (year < 0){
+                        //clearField("year");
+                        return null;
                     }
 
-                } catch (NumberFormatException nfe) {
-                    clearField("year");
+                } catch (Exception e) {
+                    //clearField("year");
+                    return null;
                 }
             }
 
