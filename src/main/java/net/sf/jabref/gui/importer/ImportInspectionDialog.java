@@ -81,6 +81,7 @@ import net.sf.jabref.logic.bibtexkeypattern.BibtexKeyPatternUtil;
 import net.sf.jabref.logic.help.HelpFile;
 import net.sf.jabref.logic.importer.ImportInspector;
 import net.sf.jabref.logic.importer.OutputPrinter;
+import net.sf.jabref.logic.importer.ParserResult;
 import net.sf.jabref.logic.l10n.Localization;
 import net.sf.jabref.logic.util.UpdateField;
 import net.sf.jabref.model.Defaults;
@@ -151,6 +152,7 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
     private final DefaultEventSelectionModel<BibEntry> selectionModel;
     private final JProgressBar progressBar = new JProgressBar(SwingConstants.HORIZONTAL);
     private final JButton ok = new JButton(Localization.lang("OK"));
+    private final JButton createNewDB = new JButton(Localization.lang("createNewDB"));
     private final JButton generate = new JButton(Localization.lang("Generate now"));
     private final EventList<BibEntry> entries = new BasicEventList<>();
     private final SortedList<BibEntry> sortedList;
@@ -273,6 +275,7 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
         builder.addRelatedGap();
         JButton delete = new JButton(Localization.lang("Delete"));
         builder.addButton(delete);
+        builder.addButton(createNewDB);
         builder.addRelatedGap();
         builder.addFixed(autoGenerate);
         builder.addButton(generate);
@@ -309,6 +312,21 @@ public class ImportInspectionDialog extends JDialog implements ImportInspector, 
         });
         deselectAllDuplicates.setEnabled(false);
         delete.addActionListener(deleteListener);
+        createNewDB.addActionListener(e2->{
+              BibDatabase bdata= new BibDatabase();
+              //add to the brand new BibDatabase
+              //duplicated entries
+              for (BibEntry entry : entries){
+                if(entry.isGroupHit())
+                  bdata.insertEntry(entry);
+              }
+              //if has entries create a new tab on the main frame
+              if(bdata.hasEntries()){
+                ParserResult pr=new ParserResult(bdata);
+                frame.addTab(pr.getDatabaseContext(), true);
+              }
+
+        });
         getContentPane().add(bb.getPanel(), BorderLayout.SOUTH);
 
         // Remember and default to last size:
