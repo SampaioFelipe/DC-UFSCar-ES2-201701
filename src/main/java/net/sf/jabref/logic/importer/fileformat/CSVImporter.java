@@ -23,7 +23,7 @@ public class CSVImporter extends Importer {
 
     @Override
     public FileExtensions getExtensions(){
-        return FileExtensions.TXT;
+        return FileExtensions.CSV;
     }
 
     @Override

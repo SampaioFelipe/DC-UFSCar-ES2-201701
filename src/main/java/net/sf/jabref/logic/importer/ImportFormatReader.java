@@ -1,6 +1,5 @@
 package net.sf.jabref.logic.importer;
 
-import net.sf.jabref.Globals;
 import net.sf.jabref.logic.importer.fileformat.*;
 import net.sf.jabref.logic.l10n.Localization;
 import net.sf.jabref.logic.xmp.XMPPreferences;
@@ -9,9 +8,6 @@ import net.sf.jabref.model.entry.BibEntry;
 import net.sf.jabref.model.strings.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -52,6 +48,7 @@ public class ImportFormatReader {
         formats.add(new RisImporter());
         formats.add(new SilverPlatterImporter());
         formats.add(new CSVImporter());
+        formats.add(new XLSImporter());
 
         // Get custom import formats
         for (CustomImporter importer : importFormatPreferences.getCustomImportList()) {
@@ -141,12 +138,6 @@ public class ImportFormatReader {
         }
     }
 
-    public static Reader getReaderDefaultEncoding(InputStream in) {
-        InputStreamReader reader;
-        reader = new InputStreamReader(in, Globals.prefs.getDefaultEncoding());
-
-        return reader;
-    }
 
     /**
      * Tries to import a file by iterating through the available import filters,
