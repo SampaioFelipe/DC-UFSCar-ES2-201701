@@ -78,7 +78,7 @@ public class BibEntry implements Cloneable {
 
     /**
      * Marks whether the complete serialization, which was read from file, should be used.
-     *
+     * <p>
      * Is set to false, if parts of the entry change. This causes the entry to be serialized based on the internal state (and not based on the old serialization)
      */
     private boolean changed;
@@ -288,18 +288,32 @@ public class BibEntry implements Cloneable {
 
     /**
      * Internal method used to get the content of a field (or its alias)
-     *
+     * <p>
      * Used by {@link #getFieldOrAlias(String)} and {@link #getFieldOrAliasLatexFree(String)}
      *
-     * @param name name of the field
+     * @param name              name of the field
      * @param getFieldInterface
-     *
      * @return determined field value
      */
     private Optional<String> genericGetFieldOrAlias(String name, GetFieldInterface getFieldInterface) {
         Optional<String> fieldValue = getFieldInterface.getValueForField(toLowerCase(name));
 
         if (fieldValue.isPresent() && !fieldValue.get().isEmpty()) {
+
+            if (name.equals("year")) {
+                System.out.println("É year");
+                try {
+                    int year = Integer.parseInt(fieldValue.get());
+                    System.out.println(year);
+                    if (year < 1000) {
+                        clearField("year");
+                    }
+
+                } catch (NumberFormatException nfe) {
+                    clearField("year");
+                }
+            }
+
             return fieldValue;
         }
 
@@ -387,11 +401,11 @@ public class BibEntry implements Cloneable {
 
     /**
      * Return the LaTeX-free contents of the given field or its alias an an Optional
-     *
+     * <p>
      * For details see also {@link #getFieldOrAlias(String)}
      *
      * @param name the name of the field
-     * @return  the stored latex-free content of the field (or its alias)
+     * @return the stored latex-free content of the field (or its alias)
      */
     public Optional<String> getFieldOrAliasLatexFree(String name) {
         return genericGetFieldOrAlias(name, this::getLatexFreeField);
@@ -412,7 +426,7 @@ public class BibEntry implements Cloneable {
      * school         <-> institution <br>
      * These work bidirectional. <br>
      * </p>
-     *
+     * <p>
      * <p>
      * Special attention is paid to dates: (see the BibLatex documentation,
      * chapter 2.3.8)
