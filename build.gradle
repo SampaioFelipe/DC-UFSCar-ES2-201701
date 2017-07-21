@@ -135,7 +135,7 @@ dependencies {
     compile 'com.github.lgooddatepicker:LGoodDatePicker:8.3.0'
 
     compile 'org.apache.poi:poi:3.9'
-
+    compile 'org.jopendocument:jOpenDocument:1.3b1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.6.2'

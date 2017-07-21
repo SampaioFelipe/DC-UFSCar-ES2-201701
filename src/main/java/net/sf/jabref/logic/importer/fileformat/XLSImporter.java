@@ -1,5 +1,7 @@
-package net.sf.jabref.logic.importer;
+package net.sf.jabref.logic.importer.fileformat;
 
+import net.sf.jabref.logic.importer.Importer;
+import net.sf.jabref.logic.importer.ParserResult;
 import net.sf.jabref.logic.util.FileExtensions;
 import net.sf.jabref.model.entry.BibEntry;
 import net.sf.jabref.model.entry.BibtexEntryTypes;
@@ -80,4 +82,3 @@ public class XLSImporter extends Importer {
         return parserResult;
     }
 }
-

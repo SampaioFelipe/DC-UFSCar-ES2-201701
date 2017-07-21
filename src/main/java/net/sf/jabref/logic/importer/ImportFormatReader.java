@@ -8,6 +8,7 @@ import net.sf.jabref.model.entry.BibEntry;
 import net.sf.jabref.model.strings.StringUtil;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -49,6 +50,7 @@ public class ImportFormatReader {
         formats.add(new SilverPlatterImporter());
         formats.add(new CSVImporter());
         formats.add(new XLSImporter());
+        formats.add(new ODSImporter());
 
         // Get custom import formats
         for (CustomImporter importer : importFormatPreferences.getCustomImportList()) {
@@ -85,7 +87,10 @@ public class ImportFormatReader {
             return importer.get().importDatabase(file, importFormatPreferences.getEncoding());
         } catch (IOException e) {
             throw new ImportException(e);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     /**
@@ -186,6 +191,8 @@ public class ImportFormatReader {
                 }
             } catch (IOException ex) {
                 // The import did not succeed. Go on.
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
             }
         }
 

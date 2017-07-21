@@ -1,17 +1,5 @@
 package net.sf.jabref.gui.importer;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import net.sf.jabref.Globals;
 import net.sf.jabref.gui.BasePanel;
 import net.sf.jabref.gui.EntryMarker;
@@ -30,6 +18,17 @@ import net.sf.jabref.model.database.KeyCollisionException;
 import net.sf.jabref.model.entry.BibEntry;
 import net.sf.jabref.model.entry.BibtexString;
 import net.sf.jabref.preferences.JabRefPreferences;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /*
  * TODO: could separate the "menu item" functionality from the importing functionality
@@ -124,6 +123,8 @@ public class ImportMenuItem extends JMenuItem implements ActionListener {
                     // this importer has thrown an IOException. We store the exception,
                     // so a relevant error message can be displayed.
                     importError = e;
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
                 }
             }
 

@@ -3,6 +3,7 @@ package net.sf.jabref.logic.importer;
 import net.sf.jabref.logic.util.FileExtensions;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -59,7 +60,7 @@ public abstract class Importer implements Comparable<Importer> {
      * @param filePath the path to the file which should be imported
      * @param encoding the encoding used to decode the file
      */
-    public ParserResult importDatabase(Path filePath, Charset encoding) throws IOException {
+    public ParserResult importDatabase(Path filePath, Charset encoding) throws IOException, URISyntaxException {
         try (BufferedReader bufferedReader = getReader(filePath, encoding)) {
             ParserResult parserResult = importDatabase(bufferedReader);
             parserResult.getMetaData().setEncoding(encoding);

@@ -1,5 +1,12 @@
 package net.sf.jabref.logic.bibtex;
 
+import net.sf.jabref.logic.importer.Importer;
+import net.sf.jabref.logic.importer.ParserResult;
+import net.sf.jabref.logic.importer.fileformat.BibtexParser;
+import net.sf.jabref.model.entry.BibEntry;
+import net.sf.jabref.preferences.JabRefPreferences;
+import org.junit.Assert;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,14 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
-
-import net.sf.jabref.logic.importer.Importer;
-import net.sf.jabref.logic.importer.ParserResult;
-import net.sf.jabref.logic.importer.fileformat.BibtexParser;
-import net.sf.jabref.model.entry.BibEntry;
-import net.sf.jabref.preferences.JabRefPreferences;
-
-import org.junit.Assert;
 
 public class BibEntryAssert {
 
@@ -127,8 +126,13 @@ public class BibEntryAssert {
      */
     public static void assertEquals(List<BibEntry> expected, Path fileToImport, Importer importer)
             throws IOException {
-        List<BibEntry> actualEntries = importer.importDatabase(fileToImport, StandardCharsets.UTF_8)
-                .getDatabase().getEntries();
+        List<BibEntry> actualEntries = null;
+        try {
+            actualEntries = importer.importDatabase(fileToImport, StandardCharsets.UTF_8)
+                    .getDatabase().getEntries();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         Assert.assertEquals(expected, actualEntries);
     }
 

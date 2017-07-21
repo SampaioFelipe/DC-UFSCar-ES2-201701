@@ -42,7 +42,8 @@ public enum FileExtensions {
     XML(Localization.lang("%0 file", "XML"), "xml"),
     ZIP(Localization.lang("%0 file", "ZIP"), "zip"),
     CSV(Localization.lang("%0 file", "CSV"), "csv"),
-    XLS(Localization.lang("%0 file", "XLS"), "xls");
+    XLS(Localization.lang("%0 file", "XLS"), "xls"),
+    ODS(Localization.lang("%0 file", "ODS"), "ods");
 
 
     private final String[] extension;
