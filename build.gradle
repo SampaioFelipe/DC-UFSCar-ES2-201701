@@ -22,6 +22,9 @@ plugins {
     // If this is updated to 0.0.9, check configurations.errorprone
     id "net.ltgt.errorprone" version "0.0.8"
     id "org.sonarqube" version "2.5"
+    // https://mvnrepository.com/artifact/org.apache.poi/poi
+//    compile group: 'org.apache.poi', name: 'poi', version: '3.9'
+
 }
 
 // use the gradle build scan feature: https://scans.gradle.com/get-started
@@ -130,6 +133,9 @@ dependencies {
     compile 'de.undercouch:citeproc-java:1.0.1'
 
     compile 'com.github.lgooddatepicker:LGoodDatePicker:8.3.0'
+
+    compile 'org.apache.poi:poi:3.9'
+    compile 'org.jopendocument:jOpenDocument:1.3b1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.6.2'

@@ -1,8 +1,8 @@
 package net.sf.jabref.logic.util;
 
-import java.util.StringJoiner;
-
 import net.sf.jabref.logic.l10n.Localization;
+
+import java.util.StringJoiner;
 
 /**
  * This enum contains all kind of file extensions for open and save dialogs.
@@ -40,7 +40,11 @@ public enum FileExtensions {
     CLASS(Localization.lang("%0 file", "CLASS"), "class"),
     JAR(Localization.lang("%0 file", "JAR"), "jar"),
     XML(Localization.lang("%0 file", "XML"), "xml"),
-    ZIP(Localization.lang("%0 file", "ZIP"), "zip");
+    ZIP(Localization.lang("%0 file", "ZIP"), "zip"),
+    CSV(Localization.lang("%0 file", "CSV"), "csv"),
+    XLS(Localization.lang("%0 file", "XLS"), "xls"),
+    ODS(Localization.lang("%0 file", "ODS"), "ods");
+
 
     private final String[] extension;
     private final String description;

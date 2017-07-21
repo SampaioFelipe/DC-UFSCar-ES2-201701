@@ -1,17 +1,18 @@
 package net.sf.jabref.logic.importer.fileformat;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.util.Objects;
-import java.util.Optional;
-
 import net.sf.jabref.logic.exporter.SavePreferences;
 import net.sf.jabref.logic.importer.ImportFormatPreferences;
 import net.sf.jabref.logic.importer.Importer;
 import net.sf.jabref.logic.importer.ParserResult;
 import net.sf.jabref.logic.util.FileExtensions;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * This importer exists only to enable `--importToOpen someEntry.bib`
@@ -59,10 +60,19 @@ public class BibtexImporter extends Importer {
         }
 
         if(suppliedEncoding.isPresent()) {
-            return super.importDatabase(filePath, suppliedEncoding.get());
+            try {
+                return super.importDatabase(filePath, suppliedEncoding.get());
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         } else {
-            return super.importDatabase(filePath, defaultEncoding);
+            try {
+                return super.importDatabase(filePath, defaultEncoding);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
+            return null;
     }
 
     @Override
